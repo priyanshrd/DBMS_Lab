@@ -1,0 +1,26 @@
+<!-- templates/get_reports.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Reports</title>
+</head>
+<body>
+    <h1>Accident Reports</h1>
+    <div id="reportList"></div>
+    <script>
+        fetch("http://127.0.0.1:5000/get-reports")
+            .then(response => response.json())
+            .then(data => {
+                const reportList = document.getElementById("reportList");
+                data.forEach(report => {
+                    const reportItem = document.createElement("p");
+                    reportItem.textContent = `Report #: ${report.report_number}, Date: ${report.date}, Location: ${report.location}`;
+                    reportList.appendChild(reportItem);
+                });
+            })
+            .catch(error => console.error("Error:", error));
+    </script>
+</body>
+</html>

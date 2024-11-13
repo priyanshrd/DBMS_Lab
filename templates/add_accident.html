@@ -1,0 +1,41 @@
+<!-- templates/add_accident.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Accident</title>
+</head>
+<body>
+    <h1>Add Accident</h1>
+    <form id="addAccidentForm">
+        <label>Report Number: <input type="number" id="report_number" required></label><br>
+        <label>Date: <input type="date" id="date" required></label><br>
+        <label>Location: <input type="text" id="location" required></label><br>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        document.getElementById("addAccidentForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const reportNumber = document.getElementById("report_number").value;
+            const date = document.getElementById("date").value;
+            const location = document.getElementById("location").value;
+            
+            fetch("http://127.0.0.1:5000/add-accident", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    report_number: reportNumber,
+                    date: date,
+                    location: location
+                })
+            })
+            .then(response => response.json())
+            .then(data => alert("Accident added successfully"))
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>
